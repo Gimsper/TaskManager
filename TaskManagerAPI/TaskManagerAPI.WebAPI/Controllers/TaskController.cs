@@ -59,7 +59,7 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
                 Response.Headers.Append("Pagination", JsonConvert.SerializeObject(metadata));
 
-                return Ok(response.Result);
+                return Ok(new { tasks = response.Result, metadata });
             }
             catch (ArgumentException ex)
             {

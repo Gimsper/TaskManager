@@ -13,6 +13,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -33,6 +41,10 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+input, textarea, select, button, option {
+  color: #333;
 }
 
 button {
@@ -64,5 +76,14 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+  * {
+    color: white
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 100% !important;
   }
 }

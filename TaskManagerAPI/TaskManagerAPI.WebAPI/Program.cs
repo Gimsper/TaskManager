@@ -88,7 +88,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSwaggerGen(opt =>
 {
-    opt.SwaggerDoc("V1", new OpenApiInfo { Title = "API Generico", Version = "V1" });
+    opt.SwaggerDoc("V1", new OpenApiInfo { Title = "TaskManagerAPI", Version = "V1" });
     opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -144,7 +144,7 @@ app.UseCors("AllowPolicySecureDomains");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger(opt => opt.RouteTemplate = "swagger/{documentName}/swagger.json");
-    app.UseSwaggerUI(opt => opt.SwaggerEndpoint("V1/swagger.json", "API Generico V1"));
+    app.UseSwaggerUI(opt => opt.SwaggerEndpoint("V1/swagger.json", "TaskManagerAPI V1"));
 }
 
 app.UseHttpsRedirection();

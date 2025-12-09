@@ -1,6 +1,8 @@
 ﻿using Models.Dto;
 using TaskManagerAPI.Application.Services.Interfaces;
 using TaskManagerAPI.Domain.Models.Dto;
+using TaskManagerAPI.Domain.Models.State;
+using TaskManagerAPI.Domain.Models.Task;
 using TaskManagerAPI.Infrastructure.Repositories.Interfaces;
 
 namespace TaskManagerAPI.Application.Services
@@ -43,7 +45,25 @@ namespace TaskManagerAPI.Application.Services
                     result.MessageResult = "No hay datos";
                 }
 
-                var response = PagedList<Domain.Entities.Task>.Create(tasks, query.PageNumber, 10);
+                var taskDto = tasks.Select(e =>
+                {
+                    return new GetTaskDTO
+                    {
+                        Id = e.Id,
+                        Title = e.Title,
+                        Description = e.Description,
+                        State = new GetStateDTO
+                        {
+                            Id = e.State.Id,
+                            Name = e.State.Name
+                        },
+                        DueDate = e.DueDate,
+                        CreatedAt = e.CreatedAt,
+                        UpdatedAt = e.UpdatedAt
+                    };
+                });
+
+                var response = PagedList<Domain.Entities.Task>.Create(tasks, query.PageNumber, 5);
                 result.Result = response;
                 result.stateOperation = true;
             }
