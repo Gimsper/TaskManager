@@ -1,10 +1,7 @@
 ﻿using Dapper;
 using TaskManagerAPI.Infrastructure.Repositories._UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TaskManagerAPI.Infrastructure.Repositories.Interfaces
+namespace ApiGenerico.Infrastructure.Repositories.Interfaces
 {
     public interface IRepository
     {

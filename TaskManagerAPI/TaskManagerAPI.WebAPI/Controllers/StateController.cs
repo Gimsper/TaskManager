@@ -26,6 +26,10 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region GET
 
+        /// <summary>
+        /// Obtiene la información de todos los estados registrados.
+        /// </summary>
+        /// <returns>Lista de estados registrados.</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<State>))]
         public IActionResult GetAll([FromHeader] string Authorization)
@@ -68,6 +72,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Obtiene la información de un estados por su identificador.
+        /// </summary>
+        /// <param name="id">Identificador del estado.</param>
+        /// <returns>Información del estado.</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(State))]
         public IActionResult GetById(int id, [FromHeader] string Authorization)
@@ -114,6 +123,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region POST
 
+        /// <summary>
+        /// Crea un nuevo estado por medio de la información suministrada
+        /// </summary>
+        /// <param name="state">Información del nuevo estado</param>
+        /// <returns>Confirmación de creación (bool)</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult Add([FromBody] CreateStateDTO state, [FromHeader] string Authorization)
@@ -176,6 +190,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region PUT
 
+        /// <summary>
+        /// Edita un estado existente por medio de la información suministrada
+        /// </summary>
+        /// <param name="state">Información nueva para el estado</param>
+        /// <returns>Confirmación de actualización (bool)</returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult Update([FromBody] UpdateStateDTO state, [FromHeader] string Authorization)
@@ -238,6 +257,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region DELETE
 
+        /// <summary>
+        /// Elimina un estado existente por medio de su identificador
+        /// </summary>
+        /// <param name="id">Identificador del estado a eliminar</param>
+        /// <returns>Confirmación de eliminación (bool)</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult Delete(int id, [FromHeader] string Authorization)

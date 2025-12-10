@@ -11,6 +11,7 @@ using TaskManagerAPI.Domain.Context;
 using TaskManagerAPI.Infrastructure.Repositories.Interfaces;
 using TaskManagerAPI.Infrastructure.Repositories;
 using TaskManagerAPI.Application.Services.Interfaces;
+using ApiGenerico.Application.Services;
 var builder = WebApplication.CreateBuilder(args);
 IEncryptionService Encrypt = new EncryptionService();
 IConfigurationSection seccionConfiguracion = builder.Configuration.GetSection("SectionConfiguration");

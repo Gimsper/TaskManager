@@ -11,6 +11,6 @@
     public class ResultOperation<T> : ResultOperation
     {
         public T? Result { get; set; }
-        public List<T> Results { get; set; } = new();
+        public List<T> Results { get; set; } = null!;
     }
 }

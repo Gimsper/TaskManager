@@ -26,6 +26,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region GET
 
+        /// <summary>
+        /// Obtiene la información paginada de todos las tareas registradas.
+        /// </summary>
+        /// <param name="query">Objeto que contiene el número de página al que se quiere navegar</param>
+        /// <returns>Lista paginada de tareas registradas.</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Domain.Entities.Task>))]
         public IActionResult GetAll([FromQuery] QueryFilter query, [FromHeader] string Authorization)
@@ -80,6 +85,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Obtiene la información de una tarea por su identificador.
+        /// </summary>
+        /// <param name="id">Identificador de la tarea.</param>
+        /// <returns>Información de la tarea.</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Domain.Entities.Task))]
         public IActionResult GetById(int id, [FromHeader] string Authorization)
@@ -126,6 +136,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region POST
 
+        /// <summary>
+        /// Crea una nueva tarea por medio de la información suministrada
+        /// </summary>
+        /// <param name="task">Información de la nueva tarea</param>
+        /// <returns>Confirmación de creación (bool)</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult Add([FromBody] CreateTaskDTO task, [FromHeader] string Authorization)
@@ -191,6 +206,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region PUT
 
+        /// <summary>
+        /// Edita una tarea existente por medio de la información suministrada
+        /// </summary>
+        /// <param name="task">Información nueva para la tarea</param>
+        /// <returns>Confirmación de actualización (bool)</returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult Update([FromBody] UpdateTaskDTO task, [FromHeader] string Authorization)
@@ -256,6 +276,11 @@ namespace TaskManagerAPI.WebAPI.Controllers
 
         #region DELETE
 
+        /// <summary>
+        /// Elimina una tarea existente por medio de su identificador
+        /// </summary>
+        /// <param name="id">Identificador de la tarea a eliminar</param>
+        /// <returns>Confirmación de eliminación (bool)</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         public IActionResult Delete(int id, [FromHeader] string Authorization)

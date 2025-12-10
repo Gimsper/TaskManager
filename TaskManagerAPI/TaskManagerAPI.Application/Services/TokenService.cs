@@ -1,14 +1,9 @@
-﻿using TaskManagerAPI.Application.Services.Interfaces;
+﻿using ApiGenerico.Application.Services;
+using Microsoft.Extensions.Options;
+using TaskManagerAPI.Application.Services.Interfaces;
 using TaskManagerAPI.Domain.Models;
 using TaskManagerAPI.Domain.Models.Dto;
 using TaskManagerAPI.Infrastructure.Repositories;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskManagerAPI.Application.Services
 {

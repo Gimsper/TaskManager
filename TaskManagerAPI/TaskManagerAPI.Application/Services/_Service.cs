@@ -1,21 +1,19 @@
-﻿using TaskManagerAPI.Domain.Models.Dto;
+﻿using ApiGenerico.Infrastructure.Repositories.Interfaces;
+using System.Text;
+using TaskManagerAPI.Domain.Models.Dto;
 using TaskManagerAPI.Infrastructure.Context;
 using TaskManagerAPI.Infrastructure.Repositories._UnitOfWork;
-using TaskManagerAPI.Infrastructure.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TaskManagerAPI.Application.Services
+namespace ApiGenerico.Application.Services
 {
     public class _Service
     {
         private string _Cnx = null;
         public _Service(string BaseCnx) { this._Cnx = BaseCnx; }
 
-        protected virtual string ListParametersToStringParameter (List<int> list)
-        {    
-        var res = string.Empty;
+        protected virtual string ListParametersToStringParameter(List<int> list)
+        {
+            var res = string.Empty;
             for (int i = 0; i < list.Count(); i++)
             {
                 res += string.Format(",{0},", list[i]);
@@ -40,7 +38,7 @@ namespace TaskManagerAPI.Application.Services
                 }
                 catch (Exception ex)
                 {
-                   
+
                     result.stateOperation = false;
 
                     StringBuilder exceptionDetails = new StringBuilder();
