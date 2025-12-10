@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { createTask, deleteTask, getTasks, updateTask, type GetTask, type Pagination } from './actions/task';
 import { getStates, type GetState } from './actions/state';
+import { loader, closeLoader } from './utils/Loader';
 
 export default function App() {
+  const todayDate = new Date().toISOString().split('T')[0];
   const [tasks, setTasks] = useState<GetTask[]>([]);
   const [states, setStates] = useState<GetState[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [dueDate, setDueDate] = useState(todayDate);
   const [stateId, setStateId] = useState(0);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [pagination, setPagination] = useState<Pagination | null>(null);
@@ -17,12 +19,9 @@ export default function App() {
 
     async function fetchTasks(pageNumber = 1) {
       const response = await getTasks(pageNumber);
-      
-      console.log('Tasks fetched:', response);
       if (response.isSuccess && response.data) {
           const fetchedTasks = response.data.tasks
           const paginationData = response.data.metadata;
-          console.log('Pagination data:', paginationData);
           setPagination(paginationData);
           setTasks(fetchedTasks);
       } else {
@@ -32,7 +31,9 @@ export default function App() {
 
   useEffect(() => {
     async function exec() {
+      loader();
       await fetchTasks();
+      closeLoader();
     }
     exec();
   }, []);
@@ -52,6 +53,8 @@ export default function App() {
   const addTask = async () => {
     if (!title.trim()) return;
     
+    loader();
+
     if (editingId) {
       await updateTask({
         Id: editingId,
@@ -76,13 +79,17 @@ export default function App() {
     setShowFormModal(false);
     setTitle('');
     setDescription('');
-    setDueDate('');
+    setDueDate(todayDate);
     setStateId(0);
+    
+    closeLoader();
   };
 
   const removeTask = async (id: number) => {
+    loader();
     await deleteTask(id);
-    setTasks(tasks.filter(t => t.Id !== id));
+    fetchTasks();
+    closeLoader();
   };
 
   const editTask = (task: GetTask) => {
@@ -98,7 +105,7 @@ export default function App() {
     <div className="container">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>Gestor de Tareas</h1>
-        <button style={{ color: '#333' }} onClick={() => setShowFormModal(true)}>Agregar Tarea</button>
+        <button style={{ color: '#333', backgroundColor: '#fff' }} onClick={() => setShowFormModal(true)}>Agregar Tarea</button>
       </div>
       {
         showFormModal && 
@@ -170,33 +177,23 @@ export default function App() {
       </table>
       {pagination && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginTop: '20px' }}>
-          {
- //           pagination.hasPreviousPage &&
-              <button 
-                onClick={() => fetchTasks(pagination.CurrentPage - 1)}
-                disabled={pagination.CurrentPage === 1}
-                style={{ padding: '8px 16px', backgroundColor: pagination.CurrentPage === 1 ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: pagination.CurrentPage === 1 ? 'not-allowed' : 'pointer' }}
-              >
-                Anterior
-              </button>
-          }
-          {
-//            pagination.hasNextPage || pagination.hasPreviousPage ? (
-              <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                Página {pagination.CurrentPage} de {pagination.TotalPages}
-              </span>
- //           ) : null
-          }
-          {
-//            pagination.hasNextPage &&
-              <button 
-                onClick={() => fetchTasks(pagination.CurrentPage + 1)}
-                disabled={pagination.CurrentPage === pagination.TotalPages}
-                style={{ padding: '8px 16px', backgroundColor: pagination.CurrentPage === pagination.TotalPages ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: pagination.CurrentPage === pagination.TotalPages ? 'not-allowed' : 'pointer' }}
-              >
-                Siguiente
-              </button>
-          }
+          <button 
+            onClick={() => fetchTasks(pagination.CurrentPage - 1)}
+            disabled={pagination.CurrentPage === 1}
+            style={{ padding: '8px 16px', backgroundColor: pagination.CurrentPage === 1 ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: pagination.CurrentPage === 1 ? 'not-allowed' : 'pointer' }}
+          >
+            Anterior
+          </button>
+          <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
+            Página {pagination.CurrentPage} de {pagination.TotalPages}
+          </span>
+          <button 
+            onClick={() => fetchTasks(pagination.CurrentPage + 1)}
+            disabled={pagination.CurrentPage === pagination.TotalPages}
+            style={{ padding: '8px 16px', backgroundColor: pagination.CurrentPage === pagination.TotalPages ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: pagination.CurrentPage === pagination.TotalPages ? 'not-allowed' : 'pointer' }}
+          >
+            Siguiente
+          </button>
         </div>
       )}
       {tasks.length === 0 && <p style={{ textAlign: 'center', color: '#999', marginTop: '20px' }}>No hay tareas. ¡Crea una nueva!</p>}

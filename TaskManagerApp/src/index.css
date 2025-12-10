@@ -44,6 +44,7 @@ h1 {
 }
 
 input, textarea, select, button, option {
+  background-color: #f9f9f9;
   color: #333;
 }
 
